@@ -75,7 +75,7 @@ namespace MobileMoney.POS.Integration.Client.Dialogs
             initiateTransactionProcessing();
         }
 
-        private void tblCancel_Click(object sender, System.EventArgs e)
+        private void btnCancel_Click(object sender, System.EventArgs e)
         {
 
         }

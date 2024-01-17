@@ -37,7 +37,7 @@
             this.tbxTransactionAmount = new System.Windows.Forms.TextBox();
             this.lblTransactionAmount = new System.Windows.Forms.Label();
             this.btnProcess = new System.Windows.Forms.Button();
-            this.tblCancel = new System.Windows.Forms.Button();
+            this.btnCancel = new System.Windows.Forms.Button();
             this.listBoxTransactionLogs = new System.Windows.Forms.ListBox();
             this.lblTransactionLog = new System.Windows.Forms.Label();
             this.SuspendLayout();
@@ -129,16 +129,16 @@
             this.btnProcess.UseVisualStyleBackColor = true;
             this.btnProcess.Click += new System.EventHandler(this.btnProcess_Click);
             // 
-            // tblCancel
+            // btnCancel
             // 
-            this.tblCancel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tblCancel.Location = new System.Drawing.Point(662, 600);
-            this.tblCancel.Name = "tblCancel";
-            this.tblCancel.Size = new System.Drawing.Size(156, 46);
-            this.tblCancel.TabIndex = 1;
-            this.tblCancel.Text = "Cancel";
-            this.tblCancel.UseVisualStyleBackColor = true;
-            this.tblCancel.Click += new System.EventHandler(this.tblCancel_Click);
+            this.btnCancel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnCancel.Location = new System.Drawing.Point(662, 600);
+            this.btnCancel.Name = "btnCancel";
+            this.btnCancel.Size = new System.Drawing.Size(156, 46);
+            this.btnCancel.TabIndex = 1;
+            this.btnCancel.Text = "Cancel";
+            this.btnCancel.UseVisualStyleBackColor = true;
+            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
             // listBoxTransactionLogs
             // 
@@ -171,7 +171,7 @@
             this.ClientSize = new System.Drawing.Size(876, 658);
             this.Controls.Add(this.lblTransactionLog);
             this.Controls.Add(this.listBoxTransactionLogs);
-            this.Controls.Add(this.tblCancel);
+            this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnProcess);
             this.Controls.Add(this.tbxTransactionAmount);
             this.Controls.Add(this.lblTransactionAmount);
@@ -203,7 +203,7 @@
         private System.Windows.Forms.TextBox tbxTransactionAmount;
         private System.Windows.Forms.Label lblTransactionAmount;
         private System.Windows.Forms.Button btnProcess;
-        private System.Windows.Forms.Button tblCancel;
+        private System.Windows.Forms.Button btnCancel;
         private System.Windows.Forms.ListBox listBoxTransactionLogs;
         private System.Windows.Forms.Label lblTransactionLog;
     }
