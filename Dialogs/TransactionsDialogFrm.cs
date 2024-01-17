@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Windows.Forms;
 using WebSocketSharp;
 
@@ -84,10 +85,12 @@ namespace MobileMoney.POS.Integration.Client.Dialogs
         {
             if (_webSocketClient == null)
             {
-                _webSocketClient = new WebSocket("ws://localhost:5000/pos");
+                var dllConfig = ConfigurationManager.OpenExeConfiguration(this.GetType().Assembly.Location);
+                var appSettings = (AppSettingsSection)dllConfig.GetSection("appSettings");
+                var webSocketUrl = appSettings.Settings["WebSocketUrl"].Value;
+                _webSocketClient = new WebSocket(webSocketUrl);
                 _webSocketClient.OnOpen += (snd, eArgs) =>
                 {
-                    //_transactionLogs.Add("Connected to MPesa transaction server.");
                     UpdateLogs();
                 };
                 _webSocketClient.OnMessage += (snd, eArgs) =>
