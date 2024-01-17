@@ -1,0 +1,47 @@
+﻿//Request
+
+var client = new RestClient("https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest");
+var request = new RestRequest(Method.POST);
+request.AddHeader("Content-Type", "application/json");
+request.AddHeader("Authorization", "Bearer ugm1U5MkdwZBNbzbsRkpXIwtkfSl");
+request.AddParameter("application/json", {
+    "BusinessShortCode": 174379,
+    "Password": "MTc0Mzc5YmZiMjc5ZjlhYTliZGJjZjE1OGU5N2RkNzFhNDY3Y2QyZTBjODkzMDU5YjEwZjc4ZTZiNzJhZGExZWQyYzkxOTIwMjMxMTA5MTE0NDQ1",
+    "Timestamp": "20231109114445",
+    "TransactionType": "CustomerPayBillOnline",
+    "Amount": 1,
+    "PartyA": 254722637496,
+    "PartyB": 174379,
+    "PhoneNumber": 254722637496,
+    "CallBackURL": "https://www.kalro.org/",
+    "AccountReference": "CompanyXLTD",
+    "TransactionDesc": "Payment of X" 
+  },  ParameterType.RequestBody);
+IRestResponse response = client.Execute(request);
+Console.WriteLine(response.Content);
+
+//Response
+
+{
+  "MerchantRequestID": "4833-18624357-1",
+  "CheckoutRequestID": "ws_CO_09112023114749213722637496",
+  "ResponseCode": "0",
+  "ResponseDescription": "Success. Request accepted for processing",
+  "CustomerMessage": "Success. Request accepted for processing"
+}
+
+
+//Get Bearer Token
+
+var client = new RestClient("https://sandbox.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials");
+var request = new RestRequest(Method.GET);
+request.AddHeader("Authorization", "Basic cFJZcjZ6anEwaThMMXp6d1FETUxwWkIzeVBDa2hNc2M6UmYyMkJmWm9nMHFRR2xWOQ==");
+request.AddParameter("text/plain", "",  ParameterType.RequestBody);
+IRestResponse response = client.Execute(request);
+Console.WriteLine(response.Content);
+
+//Response
+{
+  "access_token": "weMsPuEFAaGHjvl9LKb7ZPo1KQJV",
+  "expires_in": "3599"
+}
