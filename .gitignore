@@ -75,6 +75,9 @@ appsettings.Prod.json
 # Logs
 Logs/
 
+# Sample code
+SampleCode/
+
 # ASP.NET Scaffolding
 ScaffoldingReadMe.txt
 
