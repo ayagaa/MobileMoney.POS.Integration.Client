@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Threading;
 using System.Windows.Forms;
 using WebSocketSharp;
 
@@ -31,7 +32,6 @@ namespace MobileMoney.POS.Integration.Client.Dialogs
             _transactionLogs = new List<string>();
             listBoxTransactionLogs.DataSource = _transactionLogs;
         }
-
         private void UpdateLogs()
         {
             Action addLog = () =>
@@ -42,9 +42,7 @@ namespace MobileMoney.POS.Integration.Client.Dialogs
 
             BeginInvoke(addLog);
         }
-
-
-        private void initiateTransactionProcessing()
+        private void InitiateTransactionProcessing()
         {
             if (_webSocketClient != null)
             {
@@ -60,7 +58,6 @@ namespace MobileMoney.POS.Integration.Client.Dialogs
                         TransactionDesc = _transactionDetail,
                         AccountReference = _transactionRef,
                     };
-                    //var test = JsonConvert.DeserializeObject(Json.SerializeResults(paymentRequest));
                     _webSocketClient.Send(JsonConvert.SerializeObject(paymentRequest));
                 }
                 catch (Exception ex)
@@ -73,14 +70,19 @@ namespace MobileMoney.POS.Integration.Client.Dialogs
         }
         private void btnProcess_Click(object sender, System.EventArgs e)
         {
-            initiateTransactionProcessing();
+            InitiateTransactionProcessing();
         }
-
         private void btnCancel_Click(object sender, System.EventArgs e)
         {
-
+            if (MessageBox.Show("Are you sure you want to cancel the transaction?", "Cancel Transaction", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            {
+                _transactionLogs.Add("The transaction has been terminated by the user.");
+                _transactionLogs.Add("The application will now close...");
+                UpdateLogs();
+                Thread.Sleep(5000);
+                this.Close();
+            }
         }
-
         private void TransactionsDialogFrm_Load(object sender, System.EventArgs e)
         {
             if (_webSocketClient == null)
@@ -105,6 +107,9 @@ namespace MobileMoney.POS.Integration.Client.Dialogs
                         {
                             if (MessageBox.Show(eArgs.Data, "Transaction information", MessageBoxButtons.OK, MessageBoxIcon.Information) == DialogResult.OK)
                             {
+                                _transactionLogs.Add("The application will now close...");
+                                UpdateLogs();
+                                Thread.Sleep(5000);
                                 this.Close();
                             }
                         }
@@ -113,7 +118,7 @@ namespace MobileMoney.POS.Integration.Client.Dialogs
                         {
                             if (MessageBox.Show(string.Format("There was an error while processing the transaction. The result reads: {0}. Do you want to retry?", eArgs.Data), "Transaction incomplete", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation) == DialogResult.Yes)
                             {
-                                initiateTransactionProcessing();
+                                InitiateTransactionProcessing();
                             }
                             else
                             {
@@ -125,14 +130,16 @@ namespace MobileMoney.POS.Integration.Client.Dialogs
                 _webSocketClient.OnClose += (snd, eArgs) =>
                 {
                     _transactionLogs.Add("Connection to the server was closed.");
+                    _transactionLogs.Add("The application will now close...");
                     UpdateLogs();
+                    Thread.Sleep(10000);
+                    this.Close();
                 };
 
                 _webSocketClient.Connect();
                 UpdateLogs();
             }
         }
-
         private void TransactionsDialogFrm_FormClosing(object sender, FormClosingEventArgs e)
         {
             if (_webSocketClient != null && _webSocketClient.IsAlive)
